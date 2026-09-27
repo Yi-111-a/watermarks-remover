@@ -47,7 +47,7 @@ curl -sf "$WM/health"
 ```
 
 If `WATERMARKS_SERVER_API_KEY` is set on the service, every request needs
-`-H "Authorization: Bearer $WATERMARKS_SERVICE_API_KEY"`.
+`-H "Authorization: Bearer $WATERMARKS_SERVER_API_KEY"`.
 
 ### Capabilities
 
