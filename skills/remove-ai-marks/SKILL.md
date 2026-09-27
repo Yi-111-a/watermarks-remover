@@ -47,7 +47,10 @@ curl -sf "$WM/health"
 ```
 
 If `WATERMARKS_SERVER_API_KEY` is set on the service, every request needs
-`-H "Authorization: Bearer $WATERMARKS_SERVER_API_KEY"`.
+`-H "Authorization: Bearer $WATERMARKS_SERVER_API_KEY"`. The default URL is
+loopback; when the service runs on another host, set `WATERMARKS_SERVICE_URL`
+to an `https://` URL so the token is not sent in cleartext, and do not add
+`-L` (a redirect could forward the token to another host).
 
 ### Capabilities
 
