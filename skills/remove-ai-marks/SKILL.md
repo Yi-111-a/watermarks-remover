@@ -42,12 +42,16 @@ stop with a clear message if it is unreachable — never fall back to local
 cleaning:
 
 ```bash
-curl -sf "$WM/health"
+AUTH_HEADER=()
+if [ -n "$WATERMARKS_SERVER_API_KEY" ]; then
+  AUTH_HEADER=(-H "Authorization: Bearer $WATERMARKS_SERVER_API_KEY")
+fi
+curl -sf "${AUTH_HEADER[@]}" "$WM/health"
 # {"ok": true, "version": "..."}
 ```
 
-If `WATERMARKS_SERVER_API_KEY` is set on the service, every request needs
-`-H "Authorization: Bearer $WATERMARKS_SERVER_API_KEY"`. The default URL is
+If `WATERMARKS_SERVER_API_KEY` is set on the service, every request (including
+the health check and capabilities) needs `-H "Authorization: Bearer $WATERMARKS_SERVER_API_KEY"`. The default URL is
 loopback; when the service runs on another host, set `WATERMARKS_SERVICE_URL`
 to an `https://` URL so the token is not sent in cleartext, and do not add
 `-L` (a redirect could forward the token to another host).
