@@ -59,7 +59,7 @@ to an `https://` URL so the token is not sent in cleartext, and do not add
 ### Capabilities
 
 ```bash
-curl -s "$WM/capabilities"
+curl -s "${AUTH_HEADER[@]}" "$WM/capabilities"
 ```
 
 Reports which optional tools are available server-side (`c2patool`, `exiftool`,
@@ -114,14 +114,14 @@ and `/clean` returns 400 if a step's backend/model isn't configured).
 **Inspect first** (decide, don't guess):
 
 ```bash
-curl -s -X POST "$WM/inspect" -H 'Content-Type: application/json' \
+curl -s -X POST "${AUTH_HEADER[@]}" "$WM/inspect" -H 'Content-Type: application/json' \
   -d "{\"file\": \"$(base64 < notes.md | tr -d '\n')\", \"name\": \"notes.md\"}"
 ```
 
 **Clean** (text / image / container are auto-detected by name + bytes):
 
 ```bash
-curl -s -X POST "$WM/clean" -H 'Content-Type: application/json' \
+curl -s -X POST "${AUTH_HEADER[@]}" "$WM/clean" -H 'Content-Type: application/json' \
   -d "{\"file\": \"$(base64 < notes.md | tr -d '\n')\", \"name\": \"notes.md\"}"
 ```
 
@@ -154,7 +154,7 @@ mostly just send the file.
 ### 2. Inspect first
 
 ```bash
-curl -s -X POST "$WM/inspect" -H 'Content-Type: application/json' \
+curl -s -X POST "${AUTH_HEADER[@]}" "$WM/inspect" -H 'Content-Type: application/json' \
   -d "{\"file\": \"$(base64 < path | tr -d '\n')\", \"name\": \"$(basename path)\"}"
 ```
 
@@ -174,7 +174,7 @@ scorer (`scorers.synthid_http` / `scorers.synthid`), measure the result by
 detecting before and after cleaning:
 
 ```bash
-curl -s -X POST "$WM/detect" -H 'Content-Type: application/json' \
+curl -s -X POST "${AUTH_HEADER[@]}" "$WM/detect" -H 'Content-Type: application/json' \
   -d '{"file": "'"$(base64 < notes.txt | tr -d '\n')"'", "name": "notes.txt"}'
 ```
 
@@ -190,7 +190,7 @@ the API in Aug 2026 — see `references/vendor-notes.md`.)
 **Any supported file (unified):**
 
 ```bash
-curl -s -X POST "$WM/clean" -H 'Content-Type: application/json' \
+curl -s -X POST "${AUTH_HEADER[@]}" "$WM/clean" -H 'Content-Type: application/json' \
   -d "{\"file\": \"$(base64 < INPUT | tr -d '\n')\", \"name\": \"$(basename INPUT)\"}"
 ```
 
@@ -204,7 +204,7 @@ degraded (best-effort) result when either is missing — check `/capabilities`.
 says the backend is present:
 
 ```bash
-curl -s -X POST "$WM/clean" -H 'Content-Type: application/json' \
+curl -s -X POST "${AUTH_HEADER[@]}" "$WM/clean" -H 'Content-Type: application/json' \
   -d "{\"file\": \"$(base64 < shot.png | tr -d '\n')\", \"name\": \"shot.png\", \
        \"options\": {\"remove_pixel\": \"ctrlregen\"}}"
 ```
